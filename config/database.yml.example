@@ -1,0 +1,19 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  host:     localhost
+  database: burn_level_development
+  pool: 5
+  username: burn
+  password: burn.
+
+test: &test
+  adapter: postgresql
+  encoding: unicode
+  host:     localhost
+  port:     5432
+  database: burn_level_test
+  pool: 5
+  username: burn
+  password: burn.
+   
