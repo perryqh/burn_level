@@ -32,3 +32,4 @@
 
 # ignore redcar files
 .redcar
+/config/database.yml
