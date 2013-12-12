@@ -58,6 +58,7 @@ group :test do
   gem 'simplecov-rcov', require: false
   gem 'shoulda-matchers'
   gem 'qunit-rails'
+  gem 'timecop'
 end
 
 group :development do

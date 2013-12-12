@@ -22,8 +22,7 @@ module ControllerAuthentication
   def deny_html_access
     set_alert
     store_target_location
-    #redirect_to current_user ? session_timeout_path : login_path
-    redirect_to root_url, notice: 'Not authorized'
+    redirect_to login_url, notice: 'Not authorized'
   end
 
   def deny_xhr_access
@@ -64,8 +63,8 @@ module ControllerAuthentication
   end
 
   def set_current_user(user)
-    @current_user          = nil
-    session[:current_user] = user
+    @current_user     = nil
+    session[:user_id] = user.id
   end
 
   def user_signed_in?
@@ -100,7 +99,6 @@ module ControllerAuthentication
   def authenticate_using_token
     authenticate_or_request_with_http_token do |token, options|
       user = User.find_by_api_token(token)
-
       if user and user.has_role?(required_roles)
         set_current_user user
         reset_timeout_timer

@@ -9,23 +9,29 @@ class User < ActiveRecord::Base
   before_validation :set_defaults, on: :create
   validates :api_token, uniqueness: true
 
-  def self.from_omniauth(auth)
-    where(auth.slice('provider', 'uid')).first || create_from_omniauth(auth)
+  class << self
+    def from_omniauth(auth)
+      where(auth.slice('provider', 'uid')).first || create_from_omniauth(auth)
+    end
+
+    def create_from_omniauth(auth)
+      create! do |user|
+        user.provider = auth['provider']
+        user.uid      = auth['uid']
+        user.name     = auth['info']['nickname']
+        user.email    = auth['info']['email']
+      end
+    end
   end
 
-  def self.create_from_omniauth(auth)
-    create! do |user|
-      user.provider = auth['provider']
-      user.uid      = auth['uid']
-      user.name     = auth['info']['nickname']
-      user.email     = auth['info']['email']
-    end
+  def has_role?(roles)
+    [roles].flatten.include?(self.role)
   end
 
   private
   def set_defaults
-    self.role ||= JOCK
+    self.role       ||= JOCK
     self.preference ||= Preference.new(mass_units: 'kilograms', distance_units: 'kilometers')
-    self.api_token ||= SecureRandom.hex
+    self.api_token  ||= SecureRandom.hex
   end
 end

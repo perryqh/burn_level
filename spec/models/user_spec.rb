@@ -54,4 +54,21 @@ describe User do
       end
     end
   end
+
+  describe :has_role? do
+    [{role: User::JOCK, roles: %w{jock}, expected: true},
+     {role: User::JOCK, roles: 'jock', expected: true},
+     {role: User::ADMIN, roles: 'admin', expected: true},
+     {role: User::JOCK, roles: %w{jock random}, expected: true},
+     {role: User::JOCK, roles: %w{jock admin}, expected: true},
+     {role: User::ADMIN, roles: %w{admin nothing}, expected: true},
+     {role: User::JOCK, roles: %w{couchpotatoe}, expected: false},
+     {role: User::JOCK, roles: %w{sleeper}, expected: false},
+     {role: User::JOCK, roles: '', expected: false}
+    ].each do |test_hash|
+      it "#{test_hash[:role]} has_role? #{test_hash[:roles]} exptected #{test_hash[:expected]}" do
+        build(:user, role: test_hash[:role]).has_role?(test_hash[:roles]).should eq(test_hash[:expected])
+      end
+    end
+  end
 end
