@@ -22,8 +22,7 @@ module ControllerAuthentication
   def deny_html_access
     set_alert
     store_target_location
-    #redirect_to current_user ? session_timeout_path : login_path
-    redirect_to root_url, notice: 'Not authorized'
+    redirect_to login_url, notice: 'Not authorized'
   end
 
   def deny_xhr_access
@@ -46,6 +45,7 @@ module ControllerAuthentication
 
   def current_user
     @current_user ||= begin
+      binding.pry
       if session[:user_id] && user = User.find(session[:user_id])
         user if authorized?(user)
       end
@@ -64,8 +64,8 @@ module ControllerAuthentication
   end
 
   def set_current_user(user)
-    @current_user          = nil
-    session[:current_user] = user
+    @current_user     = nil
+    session[:user_id] = user.id
   end
 
   def user_signed_in?
