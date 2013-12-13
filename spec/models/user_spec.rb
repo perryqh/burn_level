@@ -60,7 +60,7 @@ describe User do
      {role: User::JOCK, roles: 'jock', expected: true},
      {role: User::ADMIN, roles: 'admin', expected: true},
      {role: User::JOCK, roles: %w{jock random}, expected: true},
-     {role: User::JOCK, roles: %w{jock admin}, expected: false},
+     {role: User::JOCK, roles: %w{jock admin}, expected: true},
      {role: User::ADMIN, roles: %w{admin nothing}, expected: true},
      {role: User::JOCK, roles: %w{couchpotatoe}, expected: false},
      {role: User::JOCK, roles: %w{sleeper}, expected: false},

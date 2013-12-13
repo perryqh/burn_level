@@ -47,7 +47,7 @@ describe ControllerAuthentication do
     end
   end
 
-  let(:user) { build(:user, role: '') }
+  let(:user) { create(:jock) }
   let(:signed_in_controller_dummy) { controller_dummy.tap { |cd| cd.session = {user_id: 'myid'}; cd.user = user } }
 
   describe 'current_user' do
@@ -75,9 +75,8 @@ describe ControllerAuthentication do
       end
 
       describe 'current_user with necessary roles in session' do
-        before do
-          user.stub(role: 'admin')
-        end
+        let(:user) { create(:admin) }
+
         specify { controller_dummy.current_user.should eq(user) }
         specify { controller_dummy.user_signed_in?.should be_true }
         specify { controller_dummy.flash.alert.should be_nil }
@@ -91,7 +90,7 @@ describe ControllerAuthentication do
       end
 
       describe 'current_user in session' do
-        let(:in_session_dummy) { controller_dummy.tap { |cd| cd.session = {current_user: user} } }
+        let(:in_session_dummy) { controller_dummy.tap { |cd| cd.session = {user_id: user.id} } }
         specify { in_session_dummy.current_user.should eq(user) }
         specify { in_session_dummy.user_signed_in?.should be_true }
       end
@@ -140,7 +139,7 @@ describe ControllerAuthentication do
     context 'when a user is signed in' do
       before do
         Timecop.freeze(Time.now)
-        controller_dummy.session[:current_user] = user
+        controller_dummy.session[:user_id] = user.id
       end
 
       after do
@@ -187,11 +186,11 @@ describe ControllerAuthentication do
 
         context "and the token is correct" do
           before do
-            User.stub(:find_by_credentials).with(token: "foo").and_return(user)
+            User.stub(:find_by_api_token).with("foo").and_return(user)
           end
 
           context "and the user has the correct role" do
-            before { user.roles = controller_dummy.required_roles }
+            before { user.role = controller_dummy.required_roles.first }
 
             it "logs the user in" do
               controller_dummy.should_receive(:set_current_user).with(user)
@@ -205,7 +204,7 @@ describe ControllerAuthentication do
           end
 
           context "and the user does not have the correct role" do
-            before { user.roles = ["not allowed"] }
+            before { user.role = "not allowed" }
 
             it "returns a 401 status code" do
               controller_dummy.should_receive(:render).with(hash_including(status: :unauthorized))

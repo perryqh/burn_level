@@ -99,7 +99,6 @@ module ControllerAuthentication
   def authenticate_using_token
     authenticate_or_request_with_http_token do |token, options|
       user = User.find_by_api_token(token)
-
       if user and user.has_role?(required_roles)
         set_current_user user
         reset_timeout_timer

@@ -13,6 +13,10 @@ class ApplicationController < ActionController::Base
     '/'
   end
 
+  def login_url
+    '/'
+  end
+
   rescue_from ActiveRecord::RecordNotFound do |exception|
     render nothing: true, status: 404
   end
