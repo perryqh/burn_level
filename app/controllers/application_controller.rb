@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
 
   def root_url
     return api_v1_routines_url if current_user
-    '/'
+    login_url
   end
 
   def login_url

@@ -45,7 +45,6 @@ module ControllerAuthentication
 
   def current_user
     @current_user ||= begin
-      binding.pry
       if session[:user_id] && user = User.find(session[:user_id])
         user if authorized?(user)
       end
