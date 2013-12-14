@@ -1,20 +1,15 @@
 module Api
   module V1
     class RoutineLogsController < ApiController
+      respond_to :json
       before_filter :load_routine
 
       def create
-        @routine_log = @routine.routine_logs.build
-        if @routine_log.save
-          render 'api/v1/routine_logs/show', status: 201
-        else
-          render json: @routine_log.errors, status: 422
-        end
+        respond_with :api, :v1, @routine.routine_logs.create
       end
 
       def show
-        @routine_log = @routine.routine_logs.find(params[:id])
-        render 'api/v1/routine_logs/show', status: 200
+        respond_with :api, :v1, @routine.routine_logs.find(params[:id])
       end
 
       private

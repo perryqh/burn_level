@@ -28,14 +28,17 @@ gem 'bootstrap-sass'
 
 gem 'turbolinks'
 gem 'therubyracer', require: 'v8'
-gem 'rabl'
-gem 'oj'
 gem 'haml-rails'
 gem 'friendly_id', '~> 5.0.0'
 gem 'simple_form'
 
 gem 'omniauth'
 gem 'omniauth-twitter'
+
+gem 'ember-rails'
+gem 'ember-source', '~> 1.2.0'
+gem 'ember-data-source', '~> 1.0.0.beta.3'
+gem 'emblem-rails'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
@@ -61,6 +64,7 @@ group :test do
   gem 'shoulda-matchers'
   gem 'qunit-rails'
   gem 'timecop'
+  gem 'guard-rspec'
 end
 
 group :development do

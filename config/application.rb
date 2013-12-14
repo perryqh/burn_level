@@ -8,6 +8,12 @@ Bundler.require(:default, Rails.env)
 
 module BurnLevel
   class Application < Rails::Application
+    console do
+      # this block is called only when running console,
+      # so we can safely require pry here
+      require "pry"
+      config.console = Pry
+    end
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

@@ -18,7 +18,7 @@ describe Api::V1::RoutinesController do
     describe 'success' do
       before do
         post :create, routine: routine_attributes, format: :json
-        @result = JSON.parse(response.body)
+        @result = JSON.parse(response.body)['routine']
       end
 
       specify { response.status.should eq(201) }
@@ -32,7 +32,7 @@ describe Api::V1::RoutinesController do
     describe 'success with nested' do
       before do
         post :create, routine: routine_nested_attributes.merge(user_id: @current_user.id), format: :json
-        @result = JSON.parse(response.body)
+        @result = JSON.parse(response.body)['routine']
       end
 
       specify { response.status.should eq(201) }
@@ -52,7 +52,7 @@ describe Api::V1::RoutinesController do
       end
 
       specify { response.status.should eq(422) }
-      specify { @result['name'].should eq(["can't be blank"]) }
+      specify { @result['errors']['name'].should eq(["can't be blank"]) }
     end
   end
 
@@ -60,11 +60,9 @@ describe Api::V1::RoutinesController do
     describe 'success' do
       before do
         put :update, id: routine.id, routine: {name: 'new-name'}, format: :json
-        @result = JSON.parse(response.body)
       end
 
-      specify { response.status.should eq(200) }
-      specify { @result['name'].should eq('new-name') }
+      specify { response.status.should eq(204) }
 
       it "should update the routine" do
         routine.reload
@@ -79,7 +77,7 @@ describe Api::V1::RoutinesController do
       end
 
       specify { response.status.should eq(422) }
-      specify { @result['name'].should eq(["can't be blank"]) }
+      specify { @result['errors']['name'].should eq(["can't be blank"]) }
     end
   end
 

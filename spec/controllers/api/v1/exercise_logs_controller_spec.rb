@@ -11,7 +11,7 @@ describe Api::V1::ExerciseLogsController do
       before do
         routine_log.exercise_logs.should be_empty
         post :create, routine_log_id: routine_log.id, exercise_log: first_exercise_log_attributes(routine.exercises.first.id), format: :json
-        @result = JSON.parse(response.body)
+        @result = JSON.parse(response.body)['exercise_log']
       end
 
       specify { routine_log.reload; routine_log.exercise_logs.count.should eq(1) }
@@ -29,6 +29,6 @@ describe Api::V1::ExerciseLogsController do
     end
 
     specify { response.status.should eq(422) }
-    specify { @result['duration'].should eq(["can't be blank"]) }
+    specify { @result['errors']['duration'].should eq(["can't be blank"]) }
   end
 end

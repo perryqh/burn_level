@@ -5,30 +5,19 @@ module Api
       before_filter :load_routine, only: [:update, :destroy, :show]
 
       def index
-        @routines = current_user.routines
-        respond_with @routines
+        respond_with :api, :v1, current_user.routines
       end
 
       def create
-        @routine = Routine.new routine_params
-        if @routine.save
-          render 'api/v1/routines/show', status: 201
-        else
-          render json: @routine.errors, status: 422
-        end
+        respond_with :api, :v1, Routine.create(routine_params)
       end
 
       def update
-        if @routine.update_attributes(routine_params)
-          render 'api/v1/routines/show', status: 200
-        else
-          render json: @routine.errors, status: 422
-        end
+        respond_with :api, :v1, Routine.update(params[:id], routine_params)
       end
 
       def destroy
-        @routine.destroy
-        respond_with(@routine, location: api_v1_routines_url)
+        respond_with :api, :v1, @routine.destroy
       end
 
       private

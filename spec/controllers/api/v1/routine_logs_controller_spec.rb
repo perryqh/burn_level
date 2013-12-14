@@ -9,18 +9,17 @@ describe Api::V1::RoutineLogsController do
   describe 'POST create' do
     before do
       post :create, routine_id: routine.id, format: :json
-      @result = JSON.parse(response.body)
+      @result = JSON.parse(response.body)['routine_log']
     end
 
     specify { response.status.should eq(201) }
-    specify { @result['id'].should eq(assigns(:routine_log).id) }
   end
 
   describe 'GET show' do
     describe 'success' do
       before do
         get :show, routine_id: routine.id, id: routine_log.id, format: :json
-        @result = JSON.parse(response.body)
+        @result = JSON.parse(response.body)['routine_log']
       end
 
       specify { response.status.should eq(200) }

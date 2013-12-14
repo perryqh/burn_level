@@ -1,16 +1,11 @@
 module Api
   module V1
     class ExerciseLogsController < ApiController
-      respond_to :json, :html
+      respond_to :json
       before_filter :load_routine_log
 
       def create
-        @exercise_log = @routine_log.exercise_logs.build exercise_log_params
-        if @exercise_log.save
-          render 'api/v1/exercise_logs/show', status: 201
-        else
-          render json: @exercise_log.errors, status: 422
-        end
+        respond_with :api, :v1, @routine_log, @routine_log.exercise_logs.create(exercise_log_params)
         #location = !!@routine_log.next_exercise ? new_api_v1_routine_log_exercise_log_url(routine_log_id: @routine_log.id, exercise_id: @routine_log.next_exercise.id) : api_v1_routine_routine_log_url(@routine_log.routine, @routine_log.id)
       end
 
@@ -22,7 +17,7 @@ module Api
 
       def load_routine_log
         @routine_log = RoutineLog.find(params[:routine_log_id])
-        @routine = current_user.routines.find(@routine_log.routine.id)
+        @routine     = current_user.routines.find(@routine_log.routine.id)
       end
     end
   end
