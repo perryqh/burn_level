@@ -9,7 +9,9 @@
             <ul>
                 {{#each controller}}
                     <li>
-                        {{name}}
+                        {{#linkTo "routine" this}}
+                            {{name}}
+                        {{/linkTo}}
                     </li>
                 {{/each}}
             </ul>
