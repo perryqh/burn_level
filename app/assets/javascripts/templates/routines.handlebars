@@ -1,7 +1,19 @@
-<ul>
-    {{#each controller}}
-        <li>
-            {{name}}
-        </li>
-    {{/each}}
-</ul>
+<div class="row">
+    <h1>Routines</h1>
+</div>
+<div class="row">
+    <div class="small-12 columns">
+        {{input valueBinding="newRoutineName"}}
+        <button {{action "createNewRoutine"}}>New Routine</button>
+        <div class="list-group">
+            <ul>
+                {{#each controller}}
+                    <li>
+                        {{name}}
+                    </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>
+{{outlet}}

@@ -1,4 +1,6 @@
 BurnLevel.RoutinesController = Ember.ArrayController.extend
-  addRoutine: (name) ->
-    BurnLevel.Routine.createRecord(name: name)
-    @get('store').commit()
+  actions:
+    createNewRoutine: (name) ->
+      routine = this.store.createRecord('routine', name: this.get('newRoutineName'))
+      routine.save()
+      this.set('newRoutineName', null)
