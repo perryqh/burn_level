@@ -28,7 +28,6 @@
 /spec/javascripts/compiled
 
 # Binstubs
-/bin
 
 # ignore redcar files
 .redcar

@@ -24,7 +24,6 @@ gem 'jquery-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
-gem 'bootstrap-sass'
 
 gem 'turbolinks'
 gem 'therubyracer', require: 'v8'
@@ -34,11 +33,6 @@ gem 'simple_form'
 
 gem 'omniauth'
 gem 'omniauth-twitter'
-
-gem 'ember-rails'
-gem 'ember-source', '~> 1.2.0'
-gem 'ember-data-source', '~> 1.0.0.beta.3'
-gem 'emblem-rails'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

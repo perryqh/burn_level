@@ -14,7 +14,6 @@
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
     %title BurnLevel
     = stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true
-    = javascript_include_tag "vendor/custom.modernizr"
     = csrf_meta_tags
   %body
     %nav.top-bar
@@ -33,5 +32,3 @@
 
     .row
       .small-12.columns= yield
-
-    = javascript_include_tag "application", "data-turbolinks-track" => true
