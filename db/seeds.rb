@@ -13,5 +13,4 @@ if Rails.env.development?
   abripper = Routine.create(name: 'Ab Ripper', user: User.first)
   abripper.exercises.create(name: 'Scissors', exercise_type: Exercise::TYPE_REPS, order_num: 1)
   abripper.exercises.create(name: 'Superman Banana', exercise_type: Exercise::TYPE_REPS, order_num: 2)
-  binding.pry
 end
