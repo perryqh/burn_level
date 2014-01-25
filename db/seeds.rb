@@ -5,3 +5,13 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+if Rails.env.development?
+
+  Routine.destroy_all
+
+  abripper = Routine.create(name: 'Ab Ripper', user: User.first)
+  abripper.exercises.create(name: 'Scissors', exercise_type: Exercise::TYPE_REPS, order_num: 1)
+  abripper.exercises.create(name: 'Superman Banana', exercise_type: Exercise::TYPE_REPS, order_num: 2)
+  binding.pry
+end

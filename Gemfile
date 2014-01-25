@@ -45,6 +45,8 @@ end
 # Use unicorn as the app server
 gem 'unicorn'
 
+gem 'active_model_serializers'
+
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
@@ -56,7 +58,6 @@ group :test do
   gem 'factory_girl'
   gem 'simplecov-rcov', require: false
   gem 'shoulda-matchers'
-  gem 'qunit-rails'
   gem 'timecop'
   gem 'guard-rspec'
 end
