@@ -5,8 +5,7 @@ module Api
       before_filter :load_routine, only: [:update, :destroy, :show]
 
       def index
-        #respond_with :api, :v1, current_user.routines
-        render json: current_user.routines
+        respond_with :api, :v1, current_user.routines
       end
 
       def create
